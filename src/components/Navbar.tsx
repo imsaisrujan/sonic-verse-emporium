@@ -1,8 +1,10 @@
+
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ShoppingCart, User, Search, Music, Menu, X } from 'lucide-react';
+import ThemeToggle from '@/components/ThemeToggle';
 
 const Navbar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -12,9 +14,9 @@ const Navbar: React.FC = () => {
   // Mock authentication state (replace with actual auth state)
   const isAuthenticated = false;
   
-  // This should be replaced with Redux selector in the real app
-  // Use useSelector(state => state.cart.items.length) to get the real-time cart count
-  const cartItemCount = 0; // Setting to 0 for now
+  // Use a selector to get the cart count from Redux store
+  // This is a placeholder that you would replace with your actual Redux selector
+  const cartItemCount = 0; // Replace with: useSelector(state => state.cart.totalQuantity);
   
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -28,17 +30,17 @@ const Navbar: React.FC = () => {
   };
 
   return (
-    <nav className="bg-black py-4 px-6 sticky top-0 z-50 shadow-lg">
+    <nav className="bg-black dark:bg-gray-900 py-4 px-6 sticky top-0 z-50 shadow-lg">
       <div className="container mx-auto">
         <div className="flex items-center justify-between">
           {/* Logo */}
           <Link to="/" className="flex items-center">
             <Music className="h-6 w-6 text-indigo-600 mr-2" />
-            <span className="text-xl font-bold">Melody</span>
+            <span className="text-xl font-bold text-white dark:text-white">Melody</span>
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-6">
+          <div className="hidden md:flex items-center space-x-6 text-white dark:text-gray-200">
             <Link to="/" className="hover:text-indigo-600 transition-colors">
               Home
             </Link>
@@ -59,7 +61,7 @@ const Navbar: React.FC = () => {
                 placeholder="Search albums, artists..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-9 bg-music-gray border-none focus:ring-indigo-600 focus-visible:ring-indigo-600"
+                className="pl-9 bg-music-gray dark:bg-gray-800 border-none focus:ring-indigo-600 focus-visible:ring-indigo-600"
               />
             </div>
             <Button type="submit" variant="ghost" className="ml-2">
@@ -69,6 +71,8 @@ const Navbar: React.FC = () => {
 
           {/* Right side icons */}
           <div className="flex items-center space-x-4">
+            <ThemeToggle />
+            
             <Link to="/cart" className="relative">
               <ShoppingCart className="h-6 w-6 text-white hover:text-indigo-600 transition-colors" />
               {cartItemCount > 0 && (
@@ -84,7 +88,7 @@ const Navbar: React.FC = () => {
               </Link>
             ) : (
               <Link to="/login">
-                <Button variant="outline" size="sm" className="border-indigo-600 text-indigo-600 hover:bg-indigo-50">
+                <Button variant="outline" size="sm" className="border-indigo-600 text-indigo-600 hover:bg-indigo-50 dark:hover:bg-gray-800">
                   Login
                 </Button>
               </Link>
@@ -92,7 +96,7 @@ const Navbar: React.FC = () => {
             
             {/* Mobile menu button */}
             <button 
-              className="md:hidden"
+              className="md:hidden text-white"
               onClick={toggleMenu}
               aria-label="Toggle menu"
             >
@@ -107,7 +111,7 @@ const Navbar: React.FC = () => {
 
         {/* Mobile menu */}
         {isMenuOpen && (
-          <div className="md:hidden mt-4 py-4 bg-music-gray rounded-lg">
+          <div className="md:hidden mt-4 py-4 bg-music-gray dark:bg-gray-800 rounded-lg">
             <form onSubmit={handleSearch} className="px-4 mb-4">
               <div className="relative">
                 <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
@@ -116,11 +120,11 @@ const Navbar: React.FC = () => {
                   placeholder="Search albums, artists..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-9 bg-black border-none"
+                  className="pl-9 bg-black dark:bg-gray-900 border-none"
                 />
               </div>
             </form>
-            <div className="flex flex-col space-y-3 px-4">
+            <div className="flex flex-col space-y-3 px-4 text-white dark:text-gray-200">
               <Link 
                 to="/" 
                 className="py-2 hover:text-indigo-600 transition-colors"
