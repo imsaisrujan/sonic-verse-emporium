@@ -12,12 +12,12 @@ const ThemeToggle: React.FC = () => {
       pressed={theme === 'dark'}
       onPressedChange={toggleTheme}
       aria-label="Toggle theme"
-      className="hover:bg-transparent hover:text-indigo-600 transition-colors"
+      className="hover:bg-gray-100 dark:hover:bg-gray-800 p-2 rounded-md transition-colors"
     >
       {theme === 'dark' ? (
-        <Sun className="h-[1.2rem] w-[1.2rem]" />
+        <Sun className="h-[1.2rem] w-[1.2rem] text-yellow-400" />
       ) : (
-        <Moon className="h-[1.2rem] w-[1.2rem]" />
+        <Moon className="h-[1.2rem] w-[1.2rem] text-indigo-600" />
       )}
     </Toggle>
   );

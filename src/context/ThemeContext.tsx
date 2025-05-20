@@ -26,8 +26,10 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     const htmlElement = document.documentElement;
     if (theme === 'dark') {
       htmlElement.classList.add('dark');
+      htmlElement.classList.remove('light');
     } else {
       htmlElement.classList.remove('dark');
+      htmlElement.classList.add('light');
     }
   }, [theme]);
 

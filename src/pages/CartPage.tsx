@@ -1,31 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Trash2, ShoppingBag, X, Minus, Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 
-// Mock cart data
-const mockCartItems = [
-  {
-    id: '1',
-    title: 'Dawn FM',
-    artist: 'The Weeknd',
-    coverImage: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    price: 12.99,
-    quantity: 1,
-  },
-  {
-    id: '8',
-    title: 'Back in Black',
-    artist: 'AC/DC',
-    coverImage: 'https://images.unsplash.com/photo-1461784180009-21121b2f204c?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    price: 9.99,
-    quantity: 1,
-  },
-];
-
+// Empty cart by default
 const CartPage: React.FC = () => {
-  const [cartItems, setCartItems] = useState(mockCartItems);
+  // This would normally use Redux, for now we're using an empty array
+  const [cartItems, setCartItems] = React.useState([]);
   const navigate = useNavigate();
   const { toast } = useToast();
   
@@ -57,8 +39,8 @@ const CartPage: React.FC = () => {
     });
   };
   
-  const subtotal = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-  const shipping = 5.99;
+  const subtotal = cartItems.reduce((sum: number, item: any) => sum + (item.price * item.quantity), 0);
+  const shipping = cartItems.length > 0 ? 5.99 : 0;
   const total = subtotal + shipping;
   
   const proceedToCheckout = () => {
@@ -67,7 +49,7 @@ const CartPage: React.FC = () => {
   };
 
   return (
-    <div>
+    <div className="dark:text-white text-gray-800">
       <div className="flex items-center justify-between mb-8">
         <h1 className="text-3xl font-bold">Your Cart</h1>
         {cartItems.length > 0 && (
@@ -84,11 +66,11 @@ const CartPage: React.FC = () => {
       
       {cartItems.length === 0 ? (
         <div className="py-16 text-center">
-          <div className="inline-flex justify-center items-center w-20 h-20 bg-music-gray rounded-full mb-6">
-            <ShoppingBag className="h-10 w-10 text-music-primary" />
+          <div className="inline-flex justify-center items-center w-20 h-20 bg-gray-200 dark:bg-music-gray rounded-full mb-6">
+            <ShoppingBag className="h-10 w-10 text-indigo-600 dark:text-music-primary" />
           </div>
           <h2 className="text-xl font-bold mb-4">Your cart is empty</h2>
-          <p className="text-gray-400 mb-8 max-w-md mx-auto">
+          <p className="text-gray-500 dark:text-gray-400 mb-8 max-w-md mx-auto">
             Looks like you haven't added any albums to your cart yet. Start exploring our collection to find your next favorite album.
           </p>
           <Link to="/browse">

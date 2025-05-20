@@ -14,9 +14,8 @@ const Navbar: React.FC = () => {
   // Mock authentication state (replace with actual auth state)
   const isAuthenticated = false;
   
-  // Use a selector to get the cart count from Redux store
-  // This is a placeholder that you would replace with your actual Redux selector
-  const cartItemCount = 0; // Replace with: useSelector(state => state.cart.totalQuantity);
+  // This should be replaced with Redux selector in a real implementation
+  const cartItemCount = 0;
   
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -30,17 +29,17 @@ const Navbar: React.FC = () => {
   };
 
   return (
-    <nav className="bg-black dark:bg-gray-900 py-4 px-6 sticky top-0 z-50 shadow-lg">
+    <nav className="bg-white dark:bg-black py-4 px-6 sticky top-0 z-50 shadow-lg">
       <div className="container mx-auto">
         <div className="flex items-center justify-between">
           {/* Logo */}
           <Link to="/" className="flex items-center">
             <Music className="h-6 w-6 text-indigo-600 mr-2" />
-            <span className="text-xl font-bold text-white dark:text-white">Melody</span>
+            <span className="text-xl font-bold text-gray-800 dark:text-white">Melody</span>
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-6 text-white dark:text-gray-200">
+          <div className="hidden md:flex items-center space-x-8 text-gray-700 dark:text-gray-200">
             <Link to="/" className="hover:text-indigo-600 transition-colors">
               Home
             </Link>
@@ -61,7 +60,7 @@ const Navbar: React.FC = () => {
                 placeholder="Search albums, artists..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-9 bg-music-gray dark:bg-gray-800 border-none focus:ring-indigo-600 focus-visible:ring-indigo-600"
+                className="pl-9 bg-gray-100 dark:bg-music-gray border-none focus:ring-indigo-600 focus-visible:ring-indigo-600"
               />
             </div>
             <Button type="submit" variant="ghost" className="ml-2">
@@ -70,11 +69,11 @@ const Navbar: React.FC = () => {
           </form>
 
           {/* Right side icons */}
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-6">
             <ThemeToggle />
             
             <Link to="/cart" className="relative">
-              <ShoppingCart className="h-6 w-6 text-white hover:text-indigo-600 transition-colors" />
+              <ShoppingCart className="h-6 w-6 text-gray-700 dark:text-white hover:text-indigo-600 transition-colors" />
               {cartItemCount > 0 && (
                 <span className="absolute -top-2 -right-2 bg-indigo-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
                   {cartItemCount}
@@ -84,7 +83,7 @@ const Navbar: React.FC = () => {
             
             {isAuthenticated ? (
               <Link to="/profile">
-                <User className="h-6 w-6 text-white hover:text-indigo-600 transition-colors" />
+                <User className="h-6 w-6 text-gray-700 dark:text-white hover:text-indigo-600 transition-colors" />
               </Link>
             ) : (
               <Link to="/login">
@@ -96,7 +95,7 @@ const Navbar: React.FC = () => {
             
             {/* Mobile menu button */}
             <button 
-              className="md:hidden text-white"
+              className="md:hidden text-gray-700 dark:text-white"
               onClick={toggleMenu}
               aria-label="Toggle menu"
             >
@@ -111,7 +110,7 @@ const Navbar: React.FC = () => {
 
         {/* Mobile menu */}
         {isMenuOpen && (
-          <div className="md:hidden mt-4 py-4 bg-music-gray dark:bg-gray-800 rounded-lg">
+          <div className="md:hidden mt-4 py-4 bg-gray-100 dark:bg-music-gray rounded-lg">
             <form onSubmit={handleSearch} className="px-4 mb-4">
               <div className="relative">
                 <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
@@ -120,11 +119,11 @@ const Navbar: React.FC = () => {
                   placeholder="Search albums, artists..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-9 bg-black dark:bg-gray-900 border-none"
+                  className="pl-9 bg-white dark:bg-black border-none"
                 />
               </div>
             </form>
-            <div className="flex flex-col space-y-3 px-4 text-white dark:text-gray-200">
+            <div className="flex flex-col space-y-3 px-4 text-gray-700 dark:text-gray-200">
               <Link 
                 to="/" 
                 className="py-2 hover:text-indigo-600 transition-colors"
