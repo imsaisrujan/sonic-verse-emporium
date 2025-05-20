@@ -6,6 +6,7 @@ import HeroCarousel from '@/components/HeroCarousel';
 import AlbumGrid from '@/components/AlbumGrid';
 import GenreButton from '@/components/GenreButton';
 import { useToast } from '@/hooks/use-toast';
+import { Button } from '@/components/ui/button';
 
 // Mock data
 const mockFeaturedAlbums = [
@@ -124,7 +125,7 @@ const mockTopSellers = [
     id: '11',
     title: 'Abbey Road',
     artist: 'The Beatles',
-    coverImage: 'https://images.unsplash.com/photo-1482443462050-8b342880a623?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    coverImage: 'https://images.unsplash.com/photo-1499415479124-43c32433a620?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', // Updated image URL for Abbey Road
     price: 11.99,
     previewTrack: {
       id: 'track8',
@@ -165,7 +166,7 @@ const HomePage: React.FC = () => {
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-2xl font-bold">New Releases</h2>
           <Link to="/browse?new=true" className="text-music-primary hover:underline">
-            View all
+            <Button variant="link">View all</Button>
           </Link>
         </div>
         <AlbumGrid albums={mockNewReleases} onAddToCart={handleAddToCart} />
@@ -186,7 +187,7 @@ const HomePage: React.FC = () => {
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-2xl font-bold">Top Sellers</h2>
           <Link to="/browse?top=true" className="text-music-primary hover:underline">
-            View all
+            <Button variant="link">View all</Button>
           </Link>
         </div>
         <AlbumGrid albums={mockTopSellers} onAddToCart={handleAddToCart} />
@@ -199,9 +200,9 @@ const HomePage: React.FC = () => {
           Sign up to get personalized recommendations, track your favorite artists, and save your music preferences.
         </p>
         <Link to="/register">
-          <button className="bg-white text-music-primary px-6 py-3 rounded-full font-medium hover:bg-opacity-90 transition-colors">
+          <Button variant="outline" className="bg-white text-music-primary hover:bg-opacity-90">
             Create Account
-          </button>
+          </Button>
         </Link>
       </section>
     </div>

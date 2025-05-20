@@ -17,6 +17,7 @@ import RegisterPage from "./pages/RegisterPage";
 import ProfilePage from "./pages/ProfilePage";
 import NotFound from "./pages/NotFound";
 import Layout from "./components/Layout";
+import NewReleasesPage from "./pages/NewReleasesPage";
 
 const queryClient = new QueryClient();
 
@@ -37,6 +38,7 @@ const App = () => (
               <Route path="login" element={<LoginPage />} />
               <Route path="register" element={<RegisterPage />} />
               <Route path="profile" element={<ProfilePage />} />
+              <Route path="new-releases" element={<NewReleasesPage />} />
               <Route path="*" element={<NotFound />} />
             </Route>
           </Routes>

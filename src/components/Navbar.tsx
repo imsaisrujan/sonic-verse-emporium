@@ -14,7 +14,7 @@ const Navbar: React.FC = () => {
   
   // This should be replaced with Redux selector in the real app
   // Use useSelector(state => state.cart.items.length) to get the real-time cart count
-  const cartItemCount = 2; // Replace with: const cartItemCount = useSelector(state => state.cart.items.length);
+  const cartItemCount = 0; // Setting to 0 for now
   
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -45,7 +45,7 @@ const Navbar: React.FC = () => {
             <Link to="/browse" className="hover:text-indigo-600 transition-colors">
               Browse
             </Link>
-            <Link to="/browse?new=true" className="hover:text-indigo-600 transition-colors">
+            <Link to="/new-releases" className="hover:text-indigo-600 transition-colors">
               New Releases
             </Link>
           </div>
@@ -136,7 +136,7 @@ const Navbar: React.FC = () => {
                 Browse
               </Link>
               <Link 
-                to="/browse?new=true" 
+                to="/new-releases" 
                 className="py-2 hover:text-indigo-600 transition-colors"
                 onClick={() => setIsMenuOpen(false)}
               >

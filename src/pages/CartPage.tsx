@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Trash2, ShoppingBag, X, Minus, Plus } from 'lucide-react';
@@ -93,7 +92,7 @@ const CartPage: React.FC = () => {
             Looks like you haven't added any albums to your cart yet. Start exploring our collection to find your next favorite album.
           </p>
           <Link to="/browse">
-            <Button className="bg-music-primary hover:bg-music-primary/90">
+            <Button>
               Browse Albums
             </Button>
           </Link>
@@ -187,7 +186,7 @@ const CartPage: React.FC = () => {
               
               <Button 
                 onClick={proceedToCheckout}
-                className="w-full bg-music-primary hover:bg-music-primary/90"
+                className="w-full"
               >
                 Proceed to Checkout
               </Button>
