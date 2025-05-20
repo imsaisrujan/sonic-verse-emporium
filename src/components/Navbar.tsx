@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -12,7 +11,10 @@ const Navbar: React.FC = () => {
   
   // Mock authentication state (replace with actual auth state)
   const isAuthenticated = false;
-  const cartItemCount = 2; // Replace with actual cart count from state
+  
+  // This should be replaced with Redux selector in the real app
+  // Use useSelector(state => state.cart.items.length) to get the real-time cart count
+  const cartItemCount = 2; // Replace with: const cartItemCount = useSelector(state => state.cart.items.length);
   
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -31,19 +33,19 @@ const Navbar: React.FC = () => {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <Link to="/" className="flex items-center">
-            <Music className="h-6 w-6 text-music-primary mr-2" />
+            <Music className="h-6 w-6 text-indigo-600 mr-2" />
             <span className="text-xl font-bold">Melody</span>
           </Link>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-6">
-            <Link to="/" className="hover:text-music-primary transition-colors">
+            <Link to="/" className="hover:text-indigo-600 transition-colors">
               Home
             </Link>
-            <Link to="/browse" className="hover:text-music-primary transition-colors">
+            <Link to="/browse" className="hover:text-indigo-600 transition-colors">
               Browse
             </Link>
-            <Link to="/browse?new=true" className="hover:text-music-primary transition-colors">
+            <Link to="/browse?new=true" className="hover:text-indigo-600 transition-colors">
               New Releases
             </Link>
           </div>
@@ -57,7 +59,7 @@ const Navbar: React.FC = () => {
                 placeholder="Search albums, artists..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-9 bg-music-gray border-none focus:ring-music-primary focus-visible:ring-music-primary"
+                className="pl-9 bg-music-gray border-none focus:ring-indigo-600 focus-visible:ring-indigo-600"
               />
             </div>
             <Button type="submit" variant="ghost" className="ml-2">
@@ -68,9 +70,9 @@ const Navbar: React.FC = () => {
           {/* Right side icons */}
           <div className="flex items-center space-x-4">
             <Link to="/cart" className="relative">
-              <ShoppingCart className="h-6 w-6 text-white hover:text-music-primary transition-colors" />
+              <ShoppingCart className="h-6 w-6 text-white hover:text-indigo-600 transition-colors" />
               {cartItemCount > 0 && (
-                <span className="absolute -top-2 -right-2 bg-music-secondary text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                <span className="absolute -top-2 -right-2 bg-indigo-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
                   {cartItemCount}
                 </span>
               )}
@@ -78,11 +80,11 @@ const Navbar: React.FC = () => {
             
             {isAuthenticated ? (
               <Link to="/profile">
-                <User className="h-6 w-6 text-white hover:text-music-primary transition-colors" />
+                <User className="h-6 w-6 text-white hover:text-indigo-600 transition-colors" />
               </Link>
             ) : (
               <Link to="/login">
-                <Button variant="outline" size="sm" className="border-music-primary text-music-primary hover:bg-music-primary hover:text-white">
+                <Button variant="outline" size="sm" className="border-indigo-600 text-indigo-600 hover:bg-indigo-50">
                   Login
                 </Button>
               </Link>
@@ -121,21 +123,21 @@ const Navbar: React.FC = () => {
             <div className="flex flex-col space-y-3 px-4">
               <Link 
                 to="/" 
-                className="py-2 hover:text-music-primary transition-colors"
+                className="py-2 hover:text-indigo-600 transition-colors"
                 onClick={() => setIsMenuOpen(false)}
               >
                 Home
               </Link>
               <Link 
                 to="/browse" 
-                className="py-2 hover:text-music-primary transition-colors"
+                className="py-2 hover:text-indigo-600 transition-colors"
                 onClick={() => setIsMenuOpen(false)}
               >
                 Browse
               </Link>
               <Link 
                 to="/browse?new=true" 
-                className="py-2 hover:text-music-primary transition-colors"
+                className="py-2 hover:text-indigo-600 transition-colors"
                 onClick={() => setIsMenuOpen(false)}
               >
                 New Releases
@@ -143,7 +145,7 @@ const Navbar: React.FC = () => {
               {!isAuthenticated && (
                 <Link 
                   to="/register" 
-                  className="py-2 hover:text-music-primary transition-colors"
+                  className="py-2 hover:text-indigo-600 transition-colors"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   Register
