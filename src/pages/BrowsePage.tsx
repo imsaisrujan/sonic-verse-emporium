@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { Search, Filter, X } from 'lucide-react';
@@ -23,173 +22,32 @@ import {
 import { Checkbox } from '@/components/ui/checkbox';
 import AlbumGrid from '@/components/AlbumGrid';
 import { useToast } from '@/hooks/use-toast';
-
-// Mock data
-const mockAlbums = [
-  {
-    id: '4',
-    title: 'Utopia',
-    artist: 'Travis Scott',
-    coverImage: 'https://images.unsplash.com/photo-1504509546545-e000b4a62425?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    price: 12.99,
-    genre: 'Hip-Hop',
-    releaseDate: '2023-07-28',
-    rating: 4.2,
-    previewTrack: {
-      id: 'track1',
-      title: 'FE!N',
-      audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3',
-    },
-  },
-  {
-    id: '5',
-    title: 'Midnights',
-    artist: 'Taylor Swift',
-    coverImage: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    price: 14.99,
-    genre: 'Pop',
-    releaseDate: '2022-10-21',
-    rating: 4.7,
-    previewTrack: {
-      id: 'track2',
-      title: 'Anti-Hero',
-      audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3',
-    },
-  },
-  {
-    id: '6',
-    title: 'Renaissance',
-    artist: 'Beyoncé',
-    coverImage: 'https://images.unsplash.com/photo-1511735111819-9a3f7709049c?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    price: 13.99,
-    genre: 'Pop',
-    releaseDate: '2022-07-29',
-    rating: 4.8,
-    previewTrack: {
-      id: 'track3',
-      title: 'BREAK MY SOUL',
-      audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3',
-    },
-  },
-  {
-    id: '7',
-    title: 'Un Verano Sin Ti',
-    artist: 'Bad Bunny',
-    coverImage: 'https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?q=80&w=1469&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    price: 11.99,
-    genre: 'Latin',
-    releaseDate: '2022-05-06',
-    rating: 4.5,
-    previewTrack: {
-      id: 'track4',
-      title: 'Me Porto Bonito',
-      audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3',
-    },
-  },
-  {
-    id: '8',
-    title: 'Back in Black',
-    artist: 'AC/DC',
-    coverImage: 'https://images.unsplash.com/photo-1461784180009-21121b2f204c?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    price: 9.99,
-    genre: 'Rock',
-    releaseDate: '1980-07-25',
-    rating: 4.9,
-    previewTrack: {
-      id: 'track5',
-      title: 'Back in Black',
-      audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3',
-    },
-  },
-  {
-    id: '9',
-    title: 'Thriller',
-    artist: 'Michael Jackson',
-    coverImage: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    price: 10.99,
-    genre: 'Pop',
-    releaseDate: '1982-11-30',
-    rating: 5.0,
-    previewTrack: {
-      id: 'track6',
-      title: 'Billie Jean',
-      audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3',
-    },
-  },
-  {
-    id: '10',
-    title: 'Rumours',
-    artist: 'Fleetwood Mac',
-    coverImage: 'https://images.unsplash.com/photo-1459749411175-04bf5292ceea?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    price: 9.99,
-    genre: 'Rock',
-    releaseDate: '1977-02-04',
-    rating: 4.9,
-    previewTrack: {
-      id: 'track7',
-      title: 'The Chain',
-      audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3',
-    },
-  },
-  {
-    id: '11',
-    title: 'Abbey Road',
-    artist: 'The Beatles',
-    coverImage: 'https://images.unsplash.com/photo-1482443462050-8b342880a623?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    price: 11.99,
-    genre: 'Rock',
-    releaseDate: '1969-09-26',
-    rating: 5.0,
-    previewTrack: {
-      id: 'track8',
-      title: 'Come Together',
-      audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3',
-    },
-  },
-  {
-    id: '12',
-    title: 'To Pimp a Butterfly',
-    artist: 'Kendrick Lamar',
-    coverImage: 'https://images.unsplash.com/photo-1508973379184-7517410fb0bc?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    price: 12.99,
-    genre: 'Hip-Hop',
-    releaseDate: '2015-03-15',
-    rating: 4.8,
-    previewTrack: {
-      id: 'track9',
-      title: 'King Kunta',
-      audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3',
-    },
-  },
-  {
-    id: '13',
-    title: 'Kind of Blue',
-    artist: 'Miles Davis',
-    coverImage: 'https://images.unsplash.com/photo-1487180144351-b8472da7d491?q=80&w=1472&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    price: 10.99,
-    genre: 'Jazz',
-    releaseDate: '1959-08-17',
-    rating: 5.0,
-    previewTrack: {
-      id: 'track10',
-      title: 'So What',
-      audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-10.mp3',
-    },
-  },
-];
+import { useQuery } from '@tanstack/react-query';
+import { albumService } from '@/services/api';
+import { useCart } from '@/context/CartContext';
 
 const genres = ["Rock", "Pop", "Hip-Hop", "Jazz", "Latin", "Electronic", "Classical", "R&B"];
 
 const BrowsePage: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const { toast } = useToast();
+  const { addToCart } = useCart();
   
   const [searchQuery, setSearchQuery] = useState(searchParams.get('q') || '');
   const [selectedGenres, setSelectedGenres] = useState<string[]>([]);
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 20]);
   const [sortOrder, setSortOrder] = useState('relevance');
-  const [filteredAlbums, setFilteredAlbums] = useState(mockAlbums);
+  const [filteredAlbums, setFilteredAlbums] = useState<any[]>([]);
   const [isMobileFilterVisible, setIsMobileFilterVisible] = useState(false);
+  
+  // Fetch all albums
+  const { data: albums = [], isLoading } = useQuery({
+    queryKey: ['albums'],
+    queryFn: async () => {
+      const response = await albumService.getAlbums();
+      return response.data;
+    }
+  });
   
   // Initialize filters from URL params
   useEffect(() => {
@@ -212,12 +70,12 @@ const BrowsePage: React.FC = () => {
     if (topParam === 'true') {
       setSortOrder('rating');
     }
-
-    updateFilter();
   }, [searchParams]);
 
   const updateFilter = () => {
-    let result = [...mockAlbums];
+    if (!albums || albums.length === 0) return;
+    
+    let result = [...albums];
     
     // Apply search query filter
     if (searchQuery) {
@@ -267,7 +125,7 @@ const BrowsePage: React.FC = () => {
 
   useEffect(() => {
     updateFilter();
-  }, [searchQuery, selectedGenres, priceRange, sortOrder]);
+  }, [searchQuery, selectedGenres, priceRange, sortOrder, albums]);
   
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -301,12 +159,39 @@ const BrowsePage: React.FC = () => {
   };
   
   const handleAddToCart = (albumId: string) => {
-    // In a real app, this would dispatch an action to add to cart
-    toast({
-      title: "Added to cart",
-      description: "Album has been added to your cart",
-    });
+    const album = albums.find(a => a.id === albumId);
+    
+    if (album) {
+      addToCart({
+        id: album.id,
+        title: album.title,
+        artist: album.artist,
+        coverImage: album.coverImage,
+        price: album.price
+      });
+      
+      toast({
+        title: "Added to cart",
+        description: `${album.title} has been added to your cart`,
+      });
+    }
   };
+
+  // Show loading state
+  if (isLoading) {
+    return (
+      <div className="space-y-8">
+        <div className="flex justify-between items-center mb-8">
+          <h1 className="text-3xl font-bold">Browse Albums</h1>
+        </div>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+          {[1, 2, 3, 4, 5, 6, 7, 8].map(i => (
+            <div key={i} className="aspect-square bg-music-gray/50 animate-pulse rounded-lg"></div>
+          ))}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div>
