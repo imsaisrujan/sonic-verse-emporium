@@ -1,47 +1,18 @@
+
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Trash2, ShoppingBag, X, Minus, Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
+import { useCart } from '@/context/CartContext';
 
-// Empty cart by default
 const CartPage: React.FC = () => {
-  // This would normally use Redux, for now we're using an empty array
-  const [cartItems, setCartItems] = React.useState([]);
+  const { cartItems, updateQuantity, removeItem, clearCart, totalPrice } = useCart();
   const navigate = useNavigate();
   const { toast } = useToast();
   
-  const updateQuantity = (id: string, newQuantity: number) => {
-    if (newQuantity < 1) return;
-    
-    setCartItems(prev => 
-      prev.map(item => 
-        item.id === id ? { ...item, quantity: newQuantity } : item
-      )
-    );
-  };
-  
-  const removeItem = (id: string) => {
-    setCartItems(prev => prev.filter(item => item.id !== id));
-    
-    toast({
-      title: "Item removed",
-      description: "The item has been removed from your cart",
-    });
-  };
-  
-  const clearCart = () => {
-    setCartItems([]);
-    
-    toast({
-      title: "Cart cleared",
-      description: "All items have been removed from your cart",
-    });
-  };
-  
-  const subtotal = cartItems.reduce((sum: number, item: any) => sum + (item.price * item.quantity), 0);
   const shipping = cartItems.length > 0 ? 5.99 : 0;
-  const total = subtotal + shipping;
+  const total = totalPrice + shipping;
   
   const proceedToCheckout = () => {
     // In a real app, save cart state and navigate to checkout
@@ -154,7 +125,7 @@ const CartPage: React.FC = () => {
               <div className="space-y-4 mb-6">
                 <div className="flex justify-between text-gray-300">
                   <span>Subtotal ({cartItems.length} items)</span>
-                  <span>${subtotal.toFixed(2)}</span>
+                  <span>${totalPrice.toFixed(2)}</span>
                 </div>
                 <div className="flex justify-between text-gray-300">
                   <span>Shipping</span>

@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { useAudioPlayer } from '@/context/AudioPlayerContext';
 import { useToast } from '@/hooks/use-toast';
+import { useCart } from '@/context/CartContext';
 
 // Mock data for album details
 const mockAlbumDetails = {
@@ -116,6 +117,7 @@ const AlbumDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const { playTrack } = useAudioPlayer();
   const { toast } = useToast();
+  const { addToCart } = useCart();
   
   // In a real app, this would fetch the album data from an API
   const album = id ? mockAlbumDetails[id as keyof typeof mockAlbumDetails] : null;
@@ -143,6 +145,14 @@ const AlbumDetailPage: React.FC = () => {
   };
   
   const handleAddToCart = () => {
+    addToCart({
+      id: album.id,
+      title: album.title,
+      artist: album.artist,
+      coverImage: album.coverImage,
+      price: album.price
+    });
+    
     toast({
       title: "Added to cart",
       description: `${album.title} has been added to your cart`,

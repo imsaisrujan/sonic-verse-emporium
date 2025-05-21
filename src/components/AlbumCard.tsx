@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import { ShoppingCart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useAudioPlayer } from '@/context/AudioPlayerContext';
+import { useCart } from '@/context/CartContext';
+import { useToast } from '@/hooks/use-toast';
 
 interface Album {
   id: string;
@@ -20,11 +22,13 @@ interface Album {
 
 interface AlbumCardProps {
   album: Album;
-  onAddToCart: (albumId: string) => void;
+  onAddToCart?: (albumId: string) => void;
 }
 
 const AlbumCard: React.FC<AlbumCardProps> = ({ album, onAddToCart }) => {
   const { playTrack } = useAudioPlayer();
+  const { addToCart } = useCart();
+  const { toast } = useToast();
   
   const handlePlayPreview = () => {
     if (album.previewTrack) {
@@ -36,6 +40,27 @@ const AlbumCard: React.FC<AlbumCardProps> = ({ album, onAddToCart }) => {
         albumCover: album.coverImage,
       });
     }
+  };
+  
+  const handleAddToCart = () => {
+    // Use the onAddToCart prop if provided (for compatibility with existing code)
+    if (onAddToCart) {
+      onAddToCart(album.id);
+    }
+    
+    // Always use the cart context
+    addToCart({
+      id: album.id,
+      title: album.title,
+      artist: album.artist,
+      coverImage: album.coverImage,
+      price: album.price,
+    });
+    
+    toast({
+      title: "Added to cart",
+      description: `${album.title} has been added to your cart`,
+    });
   };
 
   return (
@@ -76,7 +101,7 @@ const AlbumCard: React.FC<AlbumCardProps> = ({ album, onAddToCart }) => {
           <Button
             size="sm"
             variant="outline"
-            onClick={() => onAddToCart(album.id)}
+            onClick={handleAddToCart}
             className="text-music-primary border-music-primary hover:bg-music-primary hover:text-white transition-colors"
           >
             <ShoppingCart className="h-4 w-4 mr-1" />

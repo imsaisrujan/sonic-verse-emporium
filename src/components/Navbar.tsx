@@ -5,17 +5,16 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ShoppingCart, User, Search, Music, Menu, X } from 'lucide-react';
 import ThemeToggle from '@/components/ThemeToggle';
+import { useCart } from '@/context/CartContext';
 
 const Navbar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const navigate = useNavigate();
+  const { totalQuantity } = useCart();
   
   // Mock authentication state (replace with actual auth state)
   const isAuthenticated = false;
-  
-  // This should be replaced with Redux selector in a real implementation
-  const cartItemCount = 0;
   
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -74,9 +73,9 @@ const Navbar: React.FC = () => {
             
             <Link to="/cart" className="relative">
               <ShoppingCart className="h-6 w-6 text-gray-700 dark:text-white hover:text-indigo-600 transition-colors" />
-              {cartItemCount > 0 && (
+              {totalQuantity > 0 && (
                 <span className="absolute -top-2 -right-2 bg-indigo-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-                  {cartItemCount}
+                  {totalQuantity}
                 </span>
               )}
             </Link>
