@@ -5,52 +5,30 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
-import { useToast } from '@/hooks/use-toast';
 import { Music } from 'lucide-react';
+import { useAuth } from '@/context/AuthContext';
 
 const LoginPage: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
-  const [loading, setLoading] = useState(false);
   
   const navigate = useNavigate();
-  const { toast } = useToast();
+  const { login, isLoading } = useAuth();
   
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!email || !password) {
-      toast({
-        title: "Error",
-        description: "Please fill in all fields",
-        variant: "destructive",
-      });
       return;
     }
     
-    setLoading(true);
-    
-    // Simulate API call
     try {
-      // In a real app, this would make an API call to authenticate
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      // Mock successful login
-      toast({
-        title: "Login Successful",
-        description: "Welcome back to Melody!",
-      });
-      
+      await login(email, password);
       navigate('/');
     } catch (error) {
-      toast({
-        title: "Login Failed",
-        description: "Invalid email or password",
-        variant: "destructive",
-      });
-    } finally {
-      setLoading(false);
+      // Error is handled in the context
+      console.error('Login error:', error);
     }
   };
 
@@ -119,9 +97,9 @@ const LoginPage: React.FC = () => {
           <Button 
             type="submit" 
             className="w-full bg-music-primary hover:bg-music-primary/90" 
-            disabled={loading}
+            disabled={isLoading}
           >
-            {loading ? 'Signing in...' : 'Sign in'}
+            {isLoading ? 'Signing in...' : 'Sign in'}
           </Button>
           
           <div className="text-center text-gray-400 text-sm">
