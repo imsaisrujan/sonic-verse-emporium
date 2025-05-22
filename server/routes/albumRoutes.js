@@ -21,4 +21,7 @@ router.get('/genre/:genre', albumController.getAlbumsByGenre);
 // GET single album by ID
 router.get('/:id', albumController.getAlbumById);
 
+// POST seed the database
+router.post('/seed', albumController.seedDatabase);
+
 module.exports = router;

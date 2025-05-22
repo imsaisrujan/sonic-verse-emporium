@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -21,6 +20,7 @@ import ProfilePage from "./pages/ProfilePage";
 import NotFound from "./pages/NotFound";
 import Layout from "./components/Layout";
 import NewReleasesPage from "./pages/NewReleasesPage";
+import AdminPage from "./pages/AdminPage";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -52,6 +52,7 @@ const App = () => (
                     <Route path="register" element={<RegisterPage />} />
                     <Route path="profile" element={<ProfilePage />} />
                     <Route path="new-releases" element={<NewReleasesPage />} />
+                    <Route path="/admin" element={<AdminPage />} />
                     <Route path="*" element={<NotFound />} />
                   </Route>
                 </Routes>

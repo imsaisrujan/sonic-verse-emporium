@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -47,6 +46,10 @@ const Navbar: React.FC = () => {
             </Link>
             <Link to="/new-releases" className="hover:text-indigo-600 transition-colors">
               New Releases
+            </Link>
+            {/* Add the admin link */}
+            <Link to="/admin" className="nav-link">
+              Admin
             </Link>
           </div>
 
