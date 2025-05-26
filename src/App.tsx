@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -7,6 +8,8 @@ import { AudioPlayerProvider } from "./context/AudioPlayerContext";
 import { ThemeProvider } from "./context/ThemeContext";
 import { CartProvider } from "./context/CartContext";
 import { AuthProvider } from "./context/AuthContext";
+import { PWAProvider } from "./context/PWAContext";
+import OfflineIndicator from "./components/OfflineIndicator";
 
 // Pages
 import HomePage from "./pages/HomePage";
@@ -33,35 +36,38 @@ const queryClient = new QueryClient({
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <AudioPlayerProvider>
-      <ThemeProvider>
-        <AuthProvider>
-          <CartProvider>
-            <TooltipProvider>
-              <Toaster />
-              <Sonner />
-              <BrowserRouter>
-                <Routes>
-                  <Route path="/" element={<Layout />}>
-                    <Route index element={<HomePage />} />
-                    <Route path="browse" element={<BrowsePage />} />
-                    <Route path="album/:id" element={<AlbumDetailPage />} />
-                    <Route path="cart" element={<CartPage />} />
-                    <Route path="checkout" element={<CheckoutPage />} />
-                    <Route path="login" element={<LoginPage />} />
-                    <Route path="register" element={<RegisterPage />} />
-                    <Route path="profile" element={<ProfilePage />} />
-                    <Route path="new-releases" element={<NewReleasesPage />} />
-                    <Route path="/admin" element={<AdminPage />} />
-                    <Route path="*" element={<NotFound />} />
-                  </Route>
-                </Routes>
-              </BrowserRouter>
-            </TooltipProvider>
-          </CartProvider>
-        </AuthProvider>
-      </ThemeProvider>
-    </AudioPlayerProvider>
+    <PWAProvider>
+      <AudioPlayerProvider>
+        <ThemeProvider>
+          <AuthProvider>
+            <CartProvider>
+              <TooltipProvider>
+                <Toaster />
+                <Sonner />
+                <OfflineIndicator />
+                <BrowserRouter>
+                  <Routes>
+                    <Route path="/" element={<Layout />}>
+                      <Route index element={<HomePage />} />
+                      <Route path="browse" element={<BrowsePage />} />
+                      <Route path="album/:id" element={<AlbumDetailPage />} />
+                      <Route path="cart" element={<CartPage />} />
+                      <Route path="checkout" element={<CheckoutPage />} />
+                      <Route path="login" element={<LoginPage />} />
+                      <Route path="register" element={<RegisterPage />} />
+                      <Route path="profile" element={<ProfilePage />} />
+                      <Route path="new-releases" element={<NewReleasesPage />} />
+                      <Route path="/admin" element={<AdminPage />} />
+                      <Route path="*" element={<NotFound />} />
+                    </Route>
+                  </Routes>
+                </BrowserRouter>
+              </TooltipProvider>
+            </CartProvider>
+          </AuthProvider>
+        </ThemeProvider>
+      </AudioPlayerProvider>
+    </PWAProvider>
   </QueryClientProvider>
 );
 
